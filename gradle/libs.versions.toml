@@ -1,0 +1,33 @@
+[versions]
+agp = "8.13.0"
+activityCompose = "1.10.1"
+foundation = "1.10.3"
+kotlin = "2.3.20"
+# Verify CMP compatibility with kotlin 2.2.x at https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-compatibility-and-versioning.html
+compose-multiplatform = "1.10.3"
+android-minSdk = "24"
+android-compileSdk = "36"
+runtime = "1.10.3"
+ui = "1.10.3"
+uiTestVersion = "1.10.3"
+vanniktechMavenPublish = "0.36.0"
+dokka = "2.0.0"
+robolectric = "4.14.1"
+
+[libraries]
+compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "foundation" }
+compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "runtime" }
+compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "ui" }
+compose-test = { module = "org.jetbrains.compose.ui:ui-test", version.ref = "uiTestVersion" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+
+[plugins]
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktechMavenPublish" }
+jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
