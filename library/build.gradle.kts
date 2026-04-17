@@ -71,7 +71,7 @@ dokka {
             includes.from("Module.md")
             sourceLink {
                 localDirectory.set(projectDir.resolve("src"))
-                remoteUrl.set(URI("https://github.com/joyfill/flowcompose/tree/main/library/src"))
+                remoteUrl.set(URI("https://github.com/j0yhq/flexbox-kotlin/tree/main/library/src"))
                 remoteLineSuffix.set("#L")
             }
         }
@@ -92,8 +92,8 @@ mavenPublishing {
         url = "https://github.com/joyfill/flowcompose/"
         licenses {
             license {
-                name = "Apache-2.0"
-                url = "https://www.apache.org/licenses/LICENSE-2.0"
+                name = "MIT"
+                url = "https://mit-license.org/"
                 distribution = "repo"
             }
         }
@@ -109,9 +109,9 @@ mavenPublishing {
             }
         }
         scm {
-            url = "https://github.com/joyfill/flowcompose/"
-            connection = "scm:git:git://github.com/joyfill/flowcompose.git"
-            developerConnection = "scm:git:ssh://git@github.com/joyfill/flowcompose.git"
+            url = "https://github.com/j0yhq/flexbox-kotlin/"
+            connection = "scm:git:git://github.com/j0yhq/flexbox-kotlin.git"
+            developerConnection = "scm:git:ssh://git@github.com/j0yhq/flexbox-kotlin.git"
         }
     }
 }
