@@ -90,6 +90,37 @@ fun FlexBox(
     )
 }
 
+/**
+ * Overload of [FlexBox] that accepts [FlexContainerStyle] parameters directly instead of
+ * a pre-built [FlexContainerStyle] instance.
+ */
+@Composable
+fun FlexBox(
+    modifier: Modifier = Modifier,
+    flexDirection: FlexDirection = FlexDirection.Row,
+    flexWrap: FlexWrap = FlexWrap.NoWrap,
+    justifyContent: JustifyContent = JustifyContent.FlexStart,
+    alignItems: AlignItems = AlignItems.Stretch,
+    alignContent: AlignContent = AlignContent.Stretch,
+    rowGap: Float = 0f,
+    columnGap: Float = 0f,
+    overflow: Overflow = Overflow.Visible,
+    content: @Composable FlexBoxScope.() -> Unit,
+) = FlexBox(
+    modifier = modifier,
+    containerStyle = FlexContainerStyle(
+        flexDirection = flexDirection,
+        flexWrap = flexWrap,
+        justifyContent = justifyContent,
+        alignItems = alignItems,
+        alignContent = alignContent,
+        rowGap = rowGap,
+        columnGap = columnGap,
+        overflow = overflow,
+    ),
+    content = content,
+)
+
 private fun flexMeasurePolicy(containerStyle: FlexContainerStyle): MeasurePolicy =
     MeasurePolicy { measurables, constraints ->
         // Treat Compose's unbounded axis (Constraints.Infinity) as unconstrained for the engine,
