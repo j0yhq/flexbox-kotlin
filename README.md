@@ -137,58 +137,6 @@ FlexBox(
 ) { /* … */ }
 ```
 
-## API Reference
-
-### `FlexContainerStyle`
-
-| Property         | Type              | Default               | CSS equivalent        |
-|------------------|-------------------|-----------------------|-----------------------|
-| `flexDirection`  | `FlexDirection`   | `Row`                 | `flex-direction`      |
-| `flexWrap`       | `FlexWrap`        | `NoWrap`              | `flex-wrap`           |
-| `justifyContent` | `JustifyContent`  | `FlexStart`           | `justify-content`     |
-| `alignItems`     | `AlignItems`      | `Stretch`             | `align-items`         |
-| `alignContent`   | `AlignContent`    | `Stretch`             | `align-content`       |
-| `rowGap`         | `Float`           | `0f`                  | `row-gap`             |
-| `columnGap`      | `Float`           | `0f`                  | `column-gap`          |
-| `overflow`       | `Overflow`        | `Visible`             | `overflow`            |
-
-**Extension:** `FlexContainerStyle.withGap(gap: Float)` sets both `rowGap` and `columnGap` at once.
-
-### `FlexItemStyle`
-
-| Property     | Type         | Default        | CSS equivalent  |
-|--------------|--------------|----------------|-----------------|
-| `order`      | `Int`        | `0`            | `order`         |
-| `flexGrow`   | `Float`      | `0f`           | `flex-grow`     |
-| `flexShrink` | `Float`      | `1f`           | `flex-shrink`   |
-| `flexBasis`  | `FlexBasis`  | `Auto`         | `flex-basis`    |
-| `alignSelf`  | `AlignSelf`  | `Auto`         | `align-self`    |
-| `position`   | `Position`   | `Static`       | `position`      |
-
-**Shorthand:** `FlexItemStyle.flex(grow, shrink = 1f, basis = Size(0f))` mirrors CSS `flex: <grow>`.
-
-### `FlexBasis`
-
-| Variant              | Description                                      | CSS equivalent        |
-|----------------------|--------------------------------------------------|-----------------------|
-| `FlexBasis.Auto`     | Natural (max-content) size                       | `flex-basis: auto`    |
-| `FlexBasis.Size(px)` | Fixed pixel size                                 | `flex-basis: <length>`|
-| `FlexBasis.Percentage(fraction)` | Fraction of container (0.0–1.0)  | `flex-basis: <percent>`|
-
-### `Position`
-
-| Variant                                            | Description                                     |
-|----------------------------------------------------|-------------------------------------------------|
-| `Position.Static`                                  | Normal flex flow, no offset (default)           |
-| `Position.Relative(top?, left?, right?, bottom?)`  | In-flow; visual offset without affecting siblings|
-| `Position.Absolute(top?, left?, right?, bottom?)`  | Out of flow; positioned against the container   |
-
-### `Overflow`
-
-`Visible` · `Hidden` · `Clip` · `Scroll` · `Auto`
-
----
-
 ## Headless usage (no Compose)
 
 `FlexboxEngine` is a pure-Kotlin layout engine with no UI runtime dependency — useful for server-side layout, PDF rendering, or unit testing.
@@ -208,8 +156,6 @@ val layouts = FlexboxEngine.calculateLayout(
 )
 // layouts[i].x, .y, .width, .height — all in pixels
 ```
-
----
 
 ## Comparison with Jetpack Compose's built-in FlexBox
 
