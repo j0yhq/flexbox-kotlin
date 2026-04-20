@@ -15,7 +15,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ./gradlew iosSimulatorArm64Test   # macOS only
 
 # Run a single test class (JVM)
-./gradlew jvmTest --tests "io.joy.flex.SomeTest"
+./gradlew jvmTest --tests "com.j0y.flex.SomeTest"
 
 # Publish to Maven Central (requires signing secrets)
 ./gradlew publishToMavenCentral --no-configuration-cache
@@ -36,7 +36,7 @@ This is a **Kotlin Multiplatform library** (`:library` module) targeting Android
 - All CSS enum values (`FlexDirection`, `FlexWrap`, `JustifyContent`, `AlignItems`, `AlignSelf`, `AlignContent`) are modeled as Kotlin enums in `commonMain`
 
 **Publishing:**
-- Group: `io.joy.flex`, artifact: `flex`, version: `0.1.0`
+- Group: `com.j0y.flex`, artifact: `flex`, version: `0.1.0`
 - Vanniktech Maven Publish plugin handles Maven Central upload + signing
 - GitHub Actions: `gradle.yml` runs tests on push/PR; `publish.yml` triggers on GitHub release events
 - Signing credentials are injected via `ORG_GRADLE_PROJECT_signingInMemoryKey*` environment variables (see `publish.yml`)

@@ -10,16 +10,16 @@ tested. The first stable artifact will be cut on the first release tag.
 
 ```kotlin
 dependencies {
-    implementation("io.joy.flex:flex:<version>")
+    implementation("com.j0y.flex:flex:<version>")
 }
 ```
 
 ## Entry points
 
-- [io.joy.flex.FlexBox] — the `@Composable` flex container
-- [io.joy.flex.FlexContainerStyle] / [io.joy.flex.FlexItemStyle] — layout configuration
-- [io.joy.flex.FlexboxEngine] — platform-agnostic headless algorithm (no Compose dependency)
-- [io.joy.flex.FlexboxCalculator] — Swift/iOS convenience wrapper via Kotlin/Native
+- [com.j0y.flex.FlexBox] — the `@Composable` flex container
+- [com.j0y.flex.FlexContainerStyle] / [com.j0y.flex.FlexItemStyle] — layout configuration
+- [com.j0y.flex.FlexboxEngine] — platform-agnostic headless algorithm (no Compose dependency)
+- [com.j0y.flex.FlexboxCalculator] — Swift/iOS convenience wrapper via Kotlin/Native
 
 ## Quick start
 
@@ -40,7 +40,7 @@ FlexBox(
 
 ## Headless usage (no Compose)
 
-[io.joy.flex.FlexboxEngine] is a pure-Kotlin layout engine with no UI runtime dependency —
+[com.j0y.flex.FlexboxEngine] is a pure-Kotlin layout engine with no UI runtime dependency —
 useful for server-side layout, PDF rendering, or unit testing.
 
 ```kotlin
@@ -59,4 +59,4 @@ val layouts = FlexboxEngine.calculateLayout(
 // layouts[i].x, .y, .width, .height — all in pixels
 ```
 
-# Package io.joy.flex
+# Package com.j0y.flex

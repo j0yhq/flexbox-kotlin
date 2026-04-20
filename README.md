@@ -11,7 +11,7 @@ A **Kotlin Multiplatform** library that brings the full CSS Flexbox layout model
 ```kotlin
 // build.gradle.kts
 dependencies {
-    implementation("io.joy.flex:flex:<version>")
+    implementation("com.j0y.flex:flex:<version>")
 }
 ```
 

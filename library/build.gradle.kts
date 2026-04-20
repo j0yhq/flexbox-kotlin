@@ -11,14 +11,14 @@ plugins {
     alias(libs.plugins.dokka)
 }
 
-group = "io.joy.flex"
+group = "com.j0y.flex"
 version = "0.1.0"
 
 kotlin {
     applyDefaultHierarchyTemplate()
     jvm()
     androidLibrary {
-        namespace = "io.joy.flex"
+        namespace = "com.j0y.flex"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
 

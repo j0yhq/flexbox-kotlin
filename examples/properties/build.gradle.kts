@@ -46,11 +46,11 @@ kotlin {
 }
 
 android {
-    namespace = "io.joy.flex.examples.properties"
+    namespace = "com.j0y.flex.examples.properties"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "io.joy.flex.examples.properties"
+        applicationId = "com.j0y.flex.examples.properties"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.compileSdk.get().toInt()
         versionCode = 1
@@ -65,6 +65,6 @@ android {
 
 compose.desktop {
     application {
-        mainClass = "io.joy.flex.examples.properties.MainKt"
+        mainClass = "com.j0y.flex.examples.properties.MainKt"
     }
 }
