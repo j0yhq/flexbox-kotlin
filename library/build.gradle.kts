@@ -30,9 +30,7 @@ kotlin {
             sourceSetTreeName = "test"
         }
 
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
-        }
+        compilerOptions.jvmTarget = JvmTarget.JVM_17
     }
     iosX64()
     iosArm64()
