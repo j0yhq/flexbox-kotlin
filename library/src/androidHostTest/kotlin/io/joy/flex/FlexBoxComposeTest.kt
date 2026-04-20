@@ -220,7 +220,9 @@ class FlexBoxComposeTest {
                 modifier = Modifier.size(300.dp, 100.dp),
                 containerStyle = FlexContainerStyle(alignItems = AlignItems.FlexStart),
             ) {
-                Box(Modifier.flexItem(FlexItemStyle(flexGrow = 0f)).size(100.dp, 30.dp).testTag("a"))
+                Box(
+                    Modifier.flexItem(FlexItemStyle(flexGrow = 0f)).size(100.dp, 30.dp).testTag("a")
+                )
                 Box(Modifier.flexItem(FlexItemStyle(flexGrow = 1f)).size(0.dp, 30.dp).testTag("b"))
             }
         }

@@ -172,7 +172,11 @@ object FlexboxEngine {
 
     // ── Step 2: resolve flex-basis ─────────────────────────────────────────────
 
-    private fun resolveBasis(input: FlexItemInput, isRow: Boolean, mainContainerSize: Float): Float {
+    private fun resolveBasis(
+        input: FlexItemInput,
+        isRow: Boolean,
+        mainContainerSize: Float,
+    ): Float {
         return when (val b = input.style.flexBasis) {
             is FlexBasis.Size -> b.value
             is FlexBasis.Percentage -> {
@@ -184,6 +188,7 @@ object FlexboxEngine {
                     if (isRow) w else h
                 }
             }
+
             is FlexBasis.Auto -> {
                 // Natural/max-content main size (unconstrained)
                 val (w, h) = input.measurer.measure(null, null)
@@ -248,6 +253,7 @@ object FlexboxEngine {
                     line.items.forEach { it.finalMainSize = it.hypotheticalMainSize }
                 }
             }
+
             freeSpace < 0f -> {
                 // Weighted shrink: shrink factor × hypothetical size
                 val totalWeighted = line.items.sumOf {
@@ -255,13 +261,16 @@ object FlexboxEngine {
                 }.toFloat()
                 if (totalWeighted > 0f) {
                     line.items.forEach { item ->
-                        val ratio = (item.input.style.flexShrink * item.hypotheticalMainSize) / totalWeighted
-                        item.finalMainSize = maxOf(0f, item.hypotheticalMainSize + freeSpace * ratio)
+                        val ratio =
+                            (item.input.style.flexShrink * item.hypotheticalMainSize) / totalWeighted
+                        item.finalMainSize =
+                            maxOf(0f, item.hypotheticalMainSize + freeSpace * ratio)
                     }
                 } else {
                     line.items.forEach { it.finalMainSize = it.hypotheticalMainSize }
                 }
             }
+
             else -> line.items.forEach { it.finalMainSize = it.hypotheticalMainSize }
         }
     }
@@ -296,11 +305,12 @@ object FlexboxEngine {
 
         // Finalize cross size for each item
         line.items.forEach { item ->
-            item.finalCrossSize = if (effectiveAlign(item, container.alignItems) == AlignSelf.Stretch) {
-                line.crossSize
-            } else {
-                item.measuredCrossSize
-            }
+            item.finalCrossSize =
+                if (effectiveAlign(item, container.alignItems) == AlignSelf.Stretch) {
+                    line.crossSize
+                } else {
+                    item.measuredCrossSize
+                }
         }
     }
 
@@ -323,16 +333,25 @@ object FlexboxEngine {
         when (alignContent) {
             AlignContent.FlexStart -> {
                 var pos = 0f
-                lines.forEachIndexed { i, line -> positions[i] = pos; pos += line.crossSize + crossGap }
+                lines.forEachIndexed { i, line ->
+                    positions[i] = pos; pos += line.crossSize + crossGap
+                }
             }
+
             AlignContent.FlexEnd -> {
                 var pos = maxOf(0f, freeSpace)
-                lines.forEachIndexed { i, line -> positions[i] = pos; pos += line.crossSize + crossGap }
+                lines.forEachIndexed { i, line ->
+                    positions[i] = pos; pos += line.crossSize + crossGap
+                }
             }
+
             AlignContent.Center -> {
                 var pos = maxOf(0f, freeSpace / 2f)
-                lines.forEachIndexed { i, line -> positions[i] = pos; pos += line.crossSize + crossGap }
+                lines.forEachIndexed { i, line ->
+                    positions[i] = pos; pos += line.crossSize + crossGap
+                }
             }
+
             AlignContent.SpaceBetween -> {
                 // crossGap always present between lines; freeSpace is distributed on top of it
                 val extraPerGap = if (n > 1) maxOf(0f, freeSpace / (n - 1)) else 0f
@@ -341,6 +360,7 @@ object FlexboxEngine {
                     positions[i] = pos; pos += line.crossSize + crossGap + extraPerGap
                 }
             }
+
             AlignContent.SpaceAround -> {
                 val unit = if (n > 0) freeSpace / n else 0f
                 var pos = unit / 2f
@@ -348,6 +368,7 @@ object FlexboxEngine {
                     positions[i] = pos; pos += line.crossSize + crossGap + unit
                 }
             }
+
             AlignContent.SpaceEvenly -> {
                 val unit = freeSpace / (n + 1)
                 var pos = unit
@@ -355,12 +376,15 @@ object FlexboxEngine {
                     positions[i] = pos; pos += line.crossSize + crossGap + unit
                 }
             }
+
             AlignContent.Stretch -> {
                 val extra = if (freeSpace > 0f && n > 0) freeSpace / n else 0f
                 // Expand each line's cross size; placeItems will use line.crossSize for Stretch items
                 lines.forEach { it.crossSize += extra }
                 var pos = 0f
-                lines.forEachIndexed { i, line -> positions[i] = pos; pos += line.crossSize + crossGap }
+                lines.forEachIndexed { i, line ->
+                    positions[i] = pos; pos += line.crossSize + crossGap
+                }
             }
         }
 
@@ -391,8 +415,10 @@ object FlexboxEngine {
                 val mainPos = mainPositions[itemIdx]
                 val align = effectiveAlign(item, container.alignItems)
                 // Use line.crossSize for Stretch items — it may have grown via alignContent:Stretch
-                val itemCross = if (align == AlignSelf.Stretch) line.crossSize else item.finalCrossSize
-                val crossPos = computeCrossPosition(align, lineCrossStart, line.crossSize, itemCross)
+                val itemCross =
+                    if (align == AlignSelf.Stretch) line.crossSize else item.finalCrossSize
+                val crossPos =
+                    computeCrossPosition(align, lineCrossStart, line.crossSize, itemCross)
 
                 val x: Float
                 val y: Float
@@ -430,20 +456,25 @@ object FlexboxEngine {
             JustifyContent.FlexStart -> {
                 startOffset = 0f; betweenExtra = 0f
             }
+
             JustifyContent.FlexEnd -> {
                 startOffset = freeSpace; betweenExtra = 0f
             }
+
             JustifyContent.Center -> {
                 startOffset = freeSpace / 2f; betweenExtra = 0f
             }
+
             JustifyContent.SpaceBetween -> {
                 startOffset = 0f
                 betweenExtra = if (n > 1) freeSpace / (n - 1) else 0f
             }
+
             JustifyContent.SpaceAround -> {
                 val unit = if (n > 0) freeSpace / n else 0f
                 startOffset = unit / 2f; betweenExtra = unit
             }
+
             JustifyContent.SpaceEvenly -> {
                 val unit = freeSpace / (n + 1)
                 startOffset = unit; betweenExtra = unit
@@ -474,14 +505,10 @@ object FlexboxEngine {
         lineCrossSize: Float,
         itemCrossSize: Float,
     ): Float = when (align) {
-        AlignSelf.Auto, AlignSelf.FlexStart, AlignSelf.Stretch ->
-            lineCrossStart
-        AlignSelf.FlexEnd ->
-            lineCrossStart + lineCrossSize - itemCrossSize
-        AlignSelf.Center ->
-            lineCrossStart + (lineCrossSize - itemCrossSize) / 2f
-        AlignSelf.Baseline ->
-            lineCrossStart // simplified: treat baseline as FlexStart
+        AlignSelf.Auto, AlignSelf.FlexStart, AlignSelf.Stretch -> lineCrossStart
+        AlignSelf.FlexEnd -> lineCrossStart + lineCrossSize - itemCrossSize
+        AlignSelf.Center -> lineCrossStart + (lineCrossSize - itemCrossSize) / 2f
+        AlignSelf.Baseline -> lineCrossStart // simplified: treat baseline as FlexStart
     }
 
     private fun effectiveAlign(item: FlexLineItem, containerAlignItems: AlignItems): AlignSelf =

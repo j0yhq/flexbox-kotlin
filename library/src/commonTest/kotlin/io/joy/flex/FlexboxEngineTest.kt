@@ -48,8 +48,10 @@ class FlexboxEngineTest {
 
     @Test
     fun row_flexStart_threeItems() {
-        val r = layout(FlexContainerStyle(), 300f, 100f,
-            item(50f, 30f), item(80f, 30f), item(60f, 30f))
+        val r = layout(
+            FlexContainerStyle(), 300f, 100f,
+            item(50f, 30f), item(80f, 30f), item(60f, 30f)
+        )
         assertLayout(r[0], 0f, 0f, 50f, 100f, label = "item0")    // Stretch fills height
         assertLayout(r[1], 50f, 0f, 80f, 100f, label = "item1")
         assertLayout(r[2], 130f, 0f, 60f, 100f, label = "item2")
@@ -57,8 +59,10 @@ class FlexboxEngineTest {
 
     @Test
     fun row_flexEnd_threeItems() {
-        val r = layout(FlexContainerStyle(justifyContent = JustifyContent.FlexEnd), 300f, 100f,
-            item(50f, 30f), item(80f, 30f), item(60f, 30f))
+        val r = layout(
+            FlexContainerStyle(justifyContent = JustifyContent.FlexEnd), 300f, 100f,
+            item(50f, 30f), item(80f, 30f), item(60f, 30f)
+        )
         // total items = 190, free = 110 → all shifted right by 110
         assertLayout(r[0], 110f, 0f, 50f, 100f, label = "item0")
         assertLayout(r[1], 160f, 0f, 80f, 100f, label = "item1")
@@ -67,8 +71,10 @@ class FlexboxEngineTest {
 
     @Test
     fun row_center_threeItems() {
-        val r = layout(FlexContainerStyle(justifyContent = JustifyContent.Center), 300f, 100f,
-            item(50f, 30f), item(80f, 30f), item(60f, 30f))
+        val r = layout(
+            FlexContainerStyle(justifyContent = JustifyContent.Center), 300f, 100f,
+            item(50f, 30f), item(80f, 30f), item(60f, 30f)
+        )
         // total = 190, free = 110, offset = 55
         assertLayout(r[0], 55f, 0f, 50f, 100f, label = "item0")
         assertLayout(r[1], 105f, 0f, 80f, 100f, label = "item1")
@@ -77,8 +83,10 @@ class FlexboxEngineTest {
 
     @Test
     fun row_spaceBetween_threeItems() {
-        val r = layout(FlexContainerStyle(justifyContent = JustifyContent.SpaceBetween), 300f, 100f,
-            item(50f, 30f), item(80f, 30f), item(60f, 30f))
+        val r = layout(
+            FlexContainerStyle(justifyContent = JustifyContent.SpaceBetween), 300f, 100f,
+            item(50f, 30f), item(80f, 30f), item(60f, 30f)
+        )
         // free = 110, spacing = 55 between pairs
         assertLayout(r[0], 0f, 0f, 50f, 100f, label = "item0")
         assertLayout(r[1], 105f, 0f, 80f, 100f, label = "item1")
@@ -87,16 +95,20 @@ class FlexboxEngineTest {
 
     @Test
     fun row_spaceAround_threeItems() {
-        val r = layout(FlexContainerStyle(justifyContent = JustifyContent.SpaceAround), 300f, 100f,
-            item(50f, 30f), item(80f, 30f), item(60f, 30f))
+        val r = layout(
+            FlexContainerStyle(justifyContent = JustifyContent.SpaceAround), 300f, 100f,
+            item(50f, 30f), item(80f, 30f), item(60f, 30f)
+        )
         // free = 110, unit = 110/3 ≈ 36.67, start = 18.33, between = 36.67
         assertLayout(r[0], 110f / 3 / 2f, 0f, 50f, 100f, label = "item0")
     }
 
     @Test
     fun row_spaceEvenly_threeItems() {
-        val r = layout(FlexContainerStyle(justifyContent = JustifyContent.SpaceEvenly), 300f, 100f,
-            item(50f, 30f), item(80f, 30f), item(60f, 30f))
+        val r = layout(
+            FlexContainerStyle(justifyContent = JustifyContent.SpaceEvenly), 300f, 100f,
+            item(50f, 30f), item(80f, 30f), item(60f, 30f)
+        )
         // free = 110, unit = 110/4 = 27.5
         val unit = 110f / 4f
         assertLayout(r[0], unit, 0f, 50f, 100f, label = "item0")
@@ -106,8 +118,10 @@ class FlexboxEngineTest {
 
     @Test
     fun row_spaceBetween_singleItem() {
-        val r = layout(FlexContainerStyle(justifyContent = JustifyContent.SpaceBetween), 200f, 100f,
-            item(50f, 30f))
+        val r = layout(
+            FlexContainerStyle(justifyContent = JustifyContent.SpaceBetween), 200f, 100f,
+            item(50f, 30f)
+        )
         assertLayout(r[0], 0f, 0f, 50f, 100f)
     }
 
@@ -128,7 +142,10 @@ class FlexboxEngineTest {
     @Test
     fun column_spaceBetween_threeItems() {
         val r = layout(
-            FlexContainerStyle(flexDirection = FlexDirection.Column, justifyContent = JustifyContent.SpaceBetween),
+            FlexContainerStyle(
+                flexDirection = FlexDirection.Column,
+                justifyContent = JustifyContent.SpaceBetween
+            ),
             100f, 300f,
             item(40f, 50f), item(40f, 80f), item(40f, 60f)
         )
@@ -651,7 +668,11 @@ class FlexboxEngineTest {
     @Test
     fun rowGap_columnDirection() {
         val r = layout(
-            FlexContainerStyle(flexDirection = FlexDirection.Column, rowGap = 20f, alignItems = AlignItems.FlexStart),
+            FlexContainerStyle(
+                flexDirection = FlexDirection.Column,
+                rowGap = 20f,
+                alignItems = AlignItems.FlexStart
+            ),
             100f, 300f,
             item(40f, 50f), item(40f, 50f)
         )
@@ -878,7 +899,11 @@ class FlexboxEngineTest {
             FlexContainerStyle(alignItems = AlignItems.FlexStart),
             300f, 200f,
             item(50f, 30f),                                                          // in-flow
-            item(40f, 25f, FlexItemStyle(position = Position.Absolute(top = 5f, left = 100f))), // absolute
+            item(
+                40f,
+                25f,
+                FlexItemStyle(position = Position.Absolute(top = 5f, left = 100f))
+            ), // absolute
             item(60f, 30f),                                                          // in-flow
         )
         assertLayout(r[0], 0f, 0f, 50f, 30f, label = "in-flow0")

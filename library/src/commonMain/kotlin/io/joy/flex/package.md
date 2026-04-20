@@ -27,16 +27,16 @@ SwiftUI's `Layout` protocol.
 
 ## Type overview
 
-| Type | Role |
-|------|------|
-| [FlexBox] | `@Composable` flex container |
-| [FlexBoxScope] | Content scope — exposes `Modifier.flexItem` |
-| [FlexContainerStyle] | Flex container properties (direction, wrap, gaps, alignment) |
-| [FlexItemStyle] | Per-child flex item properties (grow, shrink, basis, order) |
-| [FlexBasis] | Sealed class for `flex-basis`: [FlexBasis.Auto] or [FlexBasis.Size] |
-| [FlexboxEngine] | Pure-Kotlin layout engine; target-agnostic |
-| [FlexMeasurer] | Callback interface used by the engine to size items |
-| [FlexItemInput] | Input descriptor passed to [FlexboxEngine.calculateLayout] |
-| [FlexItemLayout] | Layout result (x, y, width, height) returned per item |
-| [FlexboxCalculator] | iOS/Swift bridge via Kotlin/Native |
-| [FlexboxSwiftItem] | iOS item descriptor with preferred dimensions |
+| Type                 | Role                                                                |
+|----------------------|---------------------------------------------------------------------|
+| [FlexBox]            | `@Composable` flex container                                        |
+| [FlexBoxScope]       | Content scope — exposes `Modifier.flexItem`                         |
+| [FlexContainerStyle] | Flex container properties (direction, wrap, gaps, alignment)        |
+| [FlexItemStyle]      | Per-child flex item properties (grow, shrink, basis, order)         |
+| [FlexBasis]          | Sealed class for `flex-basis`: [FlexBasis.Auto] or [FlexBasis.Size] |
+| [FlexboxEngine]      | Pure-Kotlin layout engine; target-agnostic                          |
+| [FlexMeasurer]       | Callback interface used by the engine to size items                 |
+| [FlexItemInput]      | Input descriptor passed to [FlexboxEngine.calculateLayout]          |
+| [FlexItemLayout]     | Layout result (x, y, width, height) returned per item               |
+| [FlexboxCalculator]  | iOS/Swift bridge via Kotlin/Native                                  |
+| [FlexboxSwiftItem]   | iOS item descriptor with preferred dimensions                       |

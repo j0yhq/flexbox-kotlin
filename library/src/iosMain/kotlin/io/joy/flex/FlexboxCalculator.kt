@@ -98,6 +98,11 @@ class FlexboxCalculator(val containerStyle: FlexContainerStyle) {
                 Pair(item.preferredWidth, item.preferredHeight)
             }
         }
-        return FlexboxEngine.calculateLayout(containerStyle, containerWidth, containerHeight, inputs)
+        return FlexboxEngine.calculateLayout(
+            container = containerStyle,
+            containerWidth = containerWidth,
+            containerHeight = containerHeight,
+            items = inputs
+        )
     }
 }
