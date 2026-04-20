@@ -1,6 +1,6 @@
-# Module FlowCompose
+# Module Flex
 
-FlowCompose is a **Kotlin Multiplatform** library that brings the full CSS Flexbox layout model to
+Flex is a **Kotlin Multiplatform** library that brings the full CSS Flexbox layout model to
 Compose-based UIs across Android, iOS, JVM, and Linux.
 
 **Status:** Pre-release — core API, layout engine, and Compose integration are implemented and
@@ -10,16 +10,16 @@ tested. The first stable artifact will be cut on the first release tag.
 
 ```kotlin
 dependencies {
-    implementation("io.joy.flowcompose:flowcompose:<version>")
+    implementation("io.joy.flex:flex:<version>")
 }
 ```
 
 ## Entry points
 
-- [io.joy.flowcompose.FlexBox] — the `@Composable` flex container
-- [io.joy.flowcompose.FlexContainerStyle] / [io.joy.flowcompose.FlexItemStyle] — layout configuration
-- [io.joy.flowcompose.FlexboxEngine] — platform-agnostic headless algorithm (no Compose dependency)
-- [io.joy.flowcompose.FlexboxCalculator] — Swift/iOS convenience wrapper via Kotlin/Native
+- [io.joy.flex.FlexBox] — the `@Composable` flex container
+- [io.joy.flex.FlexContainerStyle] / [io.joy.flex.FlexItemStyle] — layout configuration
+- [io.joy.flex.FlexboxEngine] — platform-agnostic headless algorithm (no Compose dependency)
+- [io.joy.flex.FlexboxCalculator] — Swift/iOS convenience wrapper via Kotlin/Native
 
 ## Quick start
 
@@ -40,7 +40,7 @@ FlexBox(
 
 ## Headless usage (no Compose)
 
-[io.joy.flowcompose.FlexboxEngine] is a pure-Kotlin layout engine with no UI runtime dependency —
+[io.joy.flex.FlexboxEngine] is a pure-Kotlin layout engine with no UI runtime dependency —
 useful for server-side layout, PDF rendering, or unit testing.
 
 ```kotlin
@@ -59,4 +59,4 @@ val layouts = FlexboxEngine.calculateLayout(
 // layouts[i].x, .y, .width, .height — all in pixels
 ```
 
-# Package io.joy.flowcompose
+# Package io.joy.flex

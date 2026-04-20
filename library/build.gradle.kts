@@ -11,14 +11,14 @@ plugins {
     alias(libs.plugins.dokka)
 }
 
-group = "io.joy.flowcompose"
+group = "io.joy.flex"
 version = "0.1.0"
 
 kotlin {
     applyDefaultHierarchyTemplate()
     jvm()
     androidLibrary {
-        namespace = "io.joy.flowcompose"
+        namespace = "io.joy.flex"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
 
@@ -65,7 +65,7 @@ kotlin {
 }
 
 dokka {
-    moduleName.set("FlowCompose")
+    moduleName.set("Flex")
     dokkaSourceSets {
         configureEach {
             includes.from("Module.md")
@@ -83,10 +83,10 @@ mavenPublishing {
 
     signAllPublications()
 
-    coordinates(group.toString(), "flowcompose", version.toString())
+    coordinates(group.toString(), "flex", version.toString())
 
     pom {
-        name = "FlowCompose"
+        name = "Flex"
         description = "A Kotlin Multiplatform library providing a flexbox layout model for Compose."
         inceptionYear = "2026"
         url = "https://github.com/j0yhq/flexbox-kotlin/"

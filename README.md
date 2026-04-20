@@ -1,4 +1,4 @@
-# FlowCompose
+# Flex
 
 A **Kotlin Multiplatform** library that brings the full CSS Flexbox layout model to Compose-based UIs across Android, iOS, JVM, and Linux.
 
@@ -11,25 +11,25 @@ A **Kotlin Multiplatform** library that brings the full CSS Flexbox layout model
 ```kotlin
 // build.gradle.kts
 dependencies {
-    implementation("io.joy.flowcompose:flowcompose:<version>")
+    implementation("io.joy.flex:flex:<version>")
 }
 ```
 
 ## Comparison with Jetpack Compose's built-in FlexBox
 
-| | Compose `FlexBox` (`@ExperimentalFlexBoxApi`) | FlowCompose `FlexBox` |
-|---|---|---|
-| **API stability** | Experimental — subject to change | Stable, versioned |
-| **`flex-direction`** | `Row`, `Column` | `Row`, `RowReverse`, `Column`, `ColumnReverse` |
-| **`flex-wrap`** | `Wrap`, `NoWrap` | `Wrap`, `NoWrap`, `WrapReverse` |
-| **`align-items`** | `Stretch`, `Start`, `End`, `Center` | + `Baseline` |
-| **`align-content`** | 6 values | + `Stretch` |
-| **Per-item: `grow`, `shrink`, `basis`, `align-self`, `order`** | Yes | Yes |
-| **`position`** | No | `Static`, `Relative`, `Absolute` |
-| **`overflow`** | No | `Visible`, `Hidden`, `Clip`, `Scroll`, `Auto` |
-| **`flex-basis: <percent>`** | No | Yes (`FlexBasis.Percentage`) |
-| **Platforms** | Android / Compose only | Android, iOS, JVM, Linux |
-| **Headless layout engine** | No | Yes (`FlexboxEngine`) |
+|                                                                | Compose `FlexBox` (`@ExperimentalFlexBoxApi`) | Flex `FlexBox`                                 |
+|----------------------------------------------------------------|-----------------------------------------------|------------------------------------------------|
+| **API stability**                                              | Experimental — subject to change              | Stable, versioned                              |
+| **`flex-direction`**                                           | `Row`, `Column`                               | `Row`, `RowReverse`, `Column`, `ColumnReverse` |
+| **`flex-wrap`**                                                | `Wrap`, `NoWrap`                              | `Wrap`, `NoWrap`, `WrapReverse`                |
+| **`align-items`**                                              | `Stretch`, `Start`, `End`, `Center`           | + `Baseline`                                   |
+| **`align-content`**                                            | 6 values                                      | + `Stretch`                                    |
+| **Per-item: `grow`, `shrink`, `basis`, `align-self`, `order`** | Yes                                           | Yes                                            |
+| **`position`**                                                 | No                                            | `Static`, `Relative`, `Absolute`               |
+| **`overflow`**                                                 | No                                            | `Visible`, `Hidden`, `Clip`, `Scroll`, `Auto`  |
+| **`flex-basis: <percent>`**                                    | No                                            | Yes (`FlexBasis.Percentage`)                   |
+| **Platforms**                                                  | Android / Compose only                        | Android, iOS, JVM, Linux                       |
+| **Headless layout engine**                                     | No                                            | Yes (`FlexboxEngine`)                          |
 
 ## Usage
 

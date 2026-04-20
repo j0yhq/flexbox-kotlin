@@ -16,6 +16,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "flowcompose"
+rootProject.name = "flex"
 include(":library")
 include(":examples:properties")
