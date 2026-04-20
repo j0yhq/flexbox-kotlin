@@ -89,7 +89,7 @@ mavenPublishing {
         name = "FlowCompose"
         description = "A Kotlin Multiplatform library providing a flexbox layout model for Compose."
         inceptionYear = "2026"
-        url = "https://github.com/joyfill/flowcompose/"
+        url = "https://github.com/j0yhq/flexbox-kotlin/"
         licenses {
             license {
                 name = "MIT"
