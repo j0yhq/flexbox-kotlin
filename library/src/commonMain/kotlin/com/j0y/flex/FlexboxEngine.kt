@@ -239,7 +239,11 @@ object FlexboxEngine {
         val n = line.items.size
         val totalHypothetical = line.items.sumOf { it.hypotheticalMainSize.toDouble() }.toFloat()
         val totalGap = if (n > 1) mainGap * (n - 1) else 0f
-        val freeSpace = mainSize - totalHypothetical - totalGap
+        // Indefinite main size: items keep their hypothetical sizes (CSS treats
+        // flex-grow as inert without a definite container size).
+        val freeSpace =
+            if (mainSize >= Float.MAX_VALUE / 2f) 0f
+            else mainSize - totalHypothetical - totalGap
 
         when {
             freeSpace > 0f -> {
@@ -327,8 +331,21 @@ object FlexboxEngine {
 
         val totalLinesCross = lines.sumOf { it.crossSize.toDouble() }.toFloat()
         val totalGap = if (n > 1) crossGap * (n - 1) else 0f
-        val freeSpace = containerCrossSize - totalLinesCross - totalGap
         val positions = FloatArray(n)
+
+        // Indefinite cross size (e.g. intrinsic measurement): no free space to
+        // distribute, so every alignContent collapses to FlexStart. Skips the
+        // Stretch branch's per-line growth, which would otherwise inflate
+        // line.crossSize by ~Float.MAX_VALUE / n.
+        if (containerCrossSize >= Float.MAX_VALUE / 2f) {
+            var pos = 0f
+            lines.forEachIndexed { i, line ->
+                positions[i] = pos; pos += line.crossSize + crossGap
+            }
+            return positions
+        }
+
+        val freeSpace = containerCrossSize - totalLinesCross - totalGap
 
         when (alignContent) {
             AlignContent.FlexStart -> {
@@ -446,7 +463,12 @@ object FlexboxEngine {
         val n = items.size
         val totalItemsSize = items.sumOf { it.finalMainSize.toDouble() }.toFloat()
         val totalGap = if (n > 1) mainGap * (n - 1) else 0f
-        val freeSpace = maxOf(0f, mainSize - totalItemsSize - totalGap)
+        // Indefinite main size collapses every justifyContent to FlexStart and
+        // disables reversed placement (subtracting from Float.MAX_VALUE yields
+        // huge positions that overflow Compose's layout-dimension cap).
+        val isMainUnbounded = mainSize >= Float.MAX_VALUE / 2f
+        val freeSpace =
+            if (isMainUnbounded) 0f else maxOf(0f, mainSize - totalItemsSize - totalGap)
 
         // startOffset: distance from "flex-start edge" to the first item
         // betweenExtra: extra space added between each pair of items (beyond mainGap)
@@ -482,7 +504,7 @@ object FlexboxEngine {
         }
 
         val positions = FloatArray(n)
-        if (isReversed) {
+        if (isReversed && !isMainUnbounded) {
             // Reversed: item[0] is closest to the "end" edge visually; lay out from end
             var distFromEnd = startOffset
             for (i in 0 until n) {

@@ -910,4 +910,90 @@ class FlexboxEngineTest {
         assertLayout(r[1], 100f, 5f, 40f, 25f, label = "absolute")
         assertLayout(r[2], 50f, 0f, 60f, 30f, label = "in-flow1")
     }
+
+    // ── Unbounded axis (intrinsic measurement) — regression for #1 ───────────
+
+    @Test
+    fun wrap_row_unboundedCrossAxis_doesNotInflateLines() {
+        // Reproduces the bug from issue #1: a wrap row measured with an
+        // indefinite cross axis (Float.MAX_VALUE) must not stretch lines to
+        // fill it. Eight 90×30 items in a 360-wide row with column-gap 24 →
+        // three rows of 3+3+2 items, line height 30, row-gap 4.
+        val r = layout(
+            FlexContainerStyle(
+                flexDirection = FlexDirection.Row,
+                flexWrap = FlexWrap.Wrap,
+                alignItems = AlignItems.FlexStart,
+                alignContent = AlignContent.Stretch,
+                rowGap = 4f,
+                columnGap = 24f,
+            ),
+            360f, Float.MAX_VALUE,
+            item(90f, 30f), item(90f, 30f), item(90f, 30f), item(90f, 30f),
+            item(90f, 30f), item(90f, 30f), item(90f, 30f), item(90f, 30f),
+        )
+        // Row 1: y = 0
+        assertLayout(r[0], 0f, 0f, 90f, 30f, label = "row1.0")
+        assertLayout(r[1], 114f, 0f, 90f, 30f, label = "row1.1")
+        assertLayout(r[2], 228f, 0f, 90f, 30f, label = "row1.2")
+        // Row 2: y = 30 + 4 = 34
+        assertLayout(r[3], 0f, 34f, 90f, 30f, label = "row2.0")
+        assertLayout(r[4], 114f, 34f, 90f, 30f, label = "row2.1")
+        assertLayout(r[5], 228f, 34f, 90f, 30f, label = "row2.2")
+        // Row 3: y = 68
+        assertLayout(r[6], 0f, 68f, 90f, 30f, label = "row3.0")
+        assertLayout(r[7], 114f, 68f, 90f, 30f, label = "row3.1")
+    }
+
+    @Test
+    fun column_unboundedMainAxis_spaceBetweenCollapsesToFlexStart() {
+        // With indefinite main size, JustifyContent.SpaceBetween has no extra
+        // space to distribute and must place items at their natural offsets.
+        val r = layout(
+            FlexContainerStyle(
+                flexDirection = FlexDirection.Column,
+                justifyContent = JustifyContent.SpaceBetween,
+                alignItems = AlignItems.FlexStart,
+            ),
+            200f, Float.MAX_VALUE,
+            item(60f, 50f), item(60f, 50f), item(60f, 50f),
+        )
+        assertLayout(r[0], 0f, 0f, 60f, 50f, label = "item0")
+        assertLayout(r[1], 0f, 50f, 60f, 50f, label = "item1")
+        assertLayout(r[2], 0f, 100f, 60f, 50f, label = "item2")
+    }
+
+    @Test
+    fun row_unboundedMainAxis_flexGrowDoesNotExplode() {
+        // flexGrow with indefinite main axis must not size items to
+        // ~Float.MAX_VALUE / N. Items keep their hypothetical (input) sizes.
+        val r = layout(
+            FlexContainerStyle(
+                flexDirection = FlexDirection.Row,
+                alignItems = AlignItems.FlexStart,
+            ),
+            Float.MAX_VALUE, 100f,
+            item(50f, 30f, FlexItemStyle(flexGrow = 1f)),
+            item(80f, 30f, FlexItemStyle(flexGrow = 1f)),
+        )
+        assertLayout(r[0], 0f, 0f, 50f, 30f, label = "item0")
+        assertLayout(r[1], 50f, 0f, 80f, 30f, label = "item1")
+    }
+
+    @Test
+    fun rowReverse_unboundedMainAxis_collapsesToForwardFlexStart() {
+        // Reversed placement subtracts from mainSize. With indefinite main,
+        // that would yield ~Float.MAX_VALUE positions; instead, fall back to
+        // forward FlexStart so positions stay finite.
+        val r = layout(
+            FlexContainerStyle(
+                flexDirection = FlexDirection.RowReverse,
+                alignItems = AlignItems.FlexStart,
+            ),
+            Float.MAX_VALUE, 100f,
+            item(50f, 30f), item(80f, 30f),
+        )
+        assertLayout(r[0], 0f, 0f, 50f, 30f, label = "item0")
+        assertLayout(r[1], 50f, 0f, 80f, 30f, label = "item1")
+    }
 }
