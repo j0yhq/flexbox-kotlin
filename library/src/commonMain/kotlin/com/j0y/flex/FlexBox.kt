@@ -14,6 +14,10 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.constrainWidth
 
+// Compose enforces 0 ≤ width/height ≤ 0xFFFFFF inside MeasureScope.layout().
+// Mirrored from androidx.compose.ui.layout.MaxLayoutDimension (private to the framework).
+private const val MaxLayoutDimension: Int = (1 shl 24) - 1
+
 /**
  * Scope for [FlexBox] content — provides [Modifier.flexItem] to configure
  * per-child flex properties.
@@ -197,7 +201,14 @@ private fun flexMeasurePolicy(containerStyle: FlexContainerStyle): MeasurePolicy
             else -> constraints.constrainHeight(contentHeight)
         }
 
-        layout(width = reportWidth, height = reportHeight) {
+        // Defense-in-depth: never feed layout() a value past Compose's cap.
+        // The engine already collapses unbounded axes to FlexStart, so this
+        // should be a no-op — but a future regression must surface as a wrong
+        // layout, not a runtime crash deep in IntrinsicsMeasureScope.
+        val safeReportWidth = reportWidth.coerceIn(0, MaxLayoutDimension)
+        val safeReportHeight = reportHeight.coerceIn(0, MaxLayoutDimension)
+
+        layout(width = safeReportWidth, height = safeReportHeight) {
             placeables.forEachIndexed { i, placeable ->
                 placeable.placeRelative(
                     x = layouts[i].x.toInt(),

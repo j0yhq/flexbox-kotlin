@@ -2,6 +2,7 @@ package com.j0y.flex
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.ExperimentalTestApi
@@ -372,5 +373,48 @@ class FlexBoxComposeTest {
         }
         onNodeWithTag("inner").assertLeftPositionInRootIsEqualTo(40.dp)   // (100-20)/2=40 from outer left
         onNodeWithTag("outer").assertLeftPositionInRootIsEqualTo(250.dp)  // SpaceBetween: 300-50
+    }
+
+    // ── intrinsic measurement (regression for #1) ─────────────────────────────
+
+    @Test
+    fun nestedWrapRow_inColumnParent_doesNotCrashOnIntrinsicMeasurement() = runComposeUiTest {
+        // Issue #1: a flexWrap=Wrap row nested inside a flex-column parent
+        // crashes with "Size out of range" because the parent column queries
+        // maxIntrinsicHeight on the inner row, and the engine distributes
+        // Float.MAX_VALUE of cross-axis free space.
+        //
+        // Eight 90×30 chips in a 360-wide wrap row with column-gap 24, row-gap
+        // 4 → three rows: chips 0-2 (y=0), chips 3-5 (y=34), chips 6-7 (y=68).
+        setContent {
+            FlexBox(
+                containerStyle = FlexContainerStyle(
+                    flexDirection = FlexDirection.Column,
+                    alignItems = AlignItems.FlexStart,
+                    rowGap = 8f,
+                ),
+            ) {
+                FlexBox(
+                    modifier = Modifier.flexItem().width(360.dp),
+                    containerStyle = FlexContainerStyle(
+                        flexDirection = FlexDirection.Row,
+                        flexWrap = FlexWrap.Wrap,
+                        alignItems = AlignItems.FlexStart,
+                        rowGap = 4f,
+                        columnGap = 24f,
+                    ),
+                ) {
+                    repeat(8) { i ->
+                        Box(Modifier.flexItem().size(90.dp, 30.dp).testTag("chip$i"))
+                    }
+                }
+            }
+        }
+        onNodeWithTag("chip0").assertLeftPositionInRootIsEqualTo(0.dp)
+        onNodeWithTag("chip0").assertTopPositionInRootIsEqualTo(0.dp)
+        onNodeWithTag("chip3").assertLeftPositionInRootIsEqualTo(0.dp)
+        onNodeWithTag("chip3").assertTopPositionInRootIsEqualTo(34.dp)
+        onNodeWithTag("chip6").assertLeftPositionInRootIsEqualTo(0.dp)
+        onNodeWithTag("chip6").assertTopPositionInRootIsEqualTo(68.dp)
     }
 }
